@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 // func main() {
 // 	sliceOfInts := makeRange(0, 10)
 // 	for i := 0; i < len(sliceOfInts); i++ {
@@ -14,9 +12,11 @@ import "fmt"
 // }
 
 func main() {
-	Seif := person{"Seif", "Mostafa"}
+	Seif := person{"Seif", "Mostafa", contactInfo{"csseifms@gmail.com", "+3590882400146"}}
 	//println(Seif.firstName)
-	fmt.Println(Seif)
+	Seif.print()
+	Seif.updateName("Sefo")
+	Seif.print()
 }
 
 func makeRange(min, max int) []int {
