@@ -26,11 +26,12 @@ type shape interface {
 func printArea(s shape) {
 	fmt.Println(s.getArea())
 }
-func main() {
-	t := triangle{3.0, 4.0}
-	s := square{5}
 
-	printArea(t)
-	printArea(s)
+// func main() {
+// 	t := triangle{3.0, 4.0}
+// 	s := square{5}
 
-}
+// 	printArea(t)
+// 	printArea(s)
+
+// }
