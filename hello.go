@@ -2,40 +2,35 @@ package main
 
 import (
 	"fmt"
-	"io"
-	"net/http"
-	"os"
 )
 
-type footballCoach struct{}
-type tennisCoach struct{}
-
-func (f footballCoach) giveInstructions() string {
-	return "Run 10KM daily"
+type triangle struct {
+	height float64
+	base   float64
 }
-func (t tennisCoach) giveInstructions() string {
-	return "Goto gym daily"
+type square struct {
+	sideLength float64
 }
 
-type coach interface {
-	giveInstructions() string
+func (t triangle) getArea() float64 {
+	return 0.5 * t.height * t.base
+}
+func (s square) getArea() float64 {
+	return s.sideLength * s.sideLength
 }
 
-func printInstructions(c coach) {
-	fmt.Println(c.giveInstructions())
+type shape interface {
+	getArea() float64
+}
+
+func printArea(s shape) {
+	fmt.Println(s.getArea())
 }
 func main() {
-	f := footballCoach{}
-	t := tennisCoach{}
-	printInstructions(f)
-	printInstructions(t)
+	t := triangle{3.0, 4.0}
+	s := square{5}
 
-	response, err := http.Get("http://www.google.com")
-	fmt.Printf("%+v , %+v", response, err)
+	printArea(t)
+	printArea(s)
 
-	// bs := make([]byte, 99999)
-	// response.Body.Read(bs)
-	// fmt.Println(string(bs))
-
-	io.Copy(os.Stdout, response.Body)
 }
