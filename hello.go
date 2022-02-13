@@ -7,6 +7,9 @@ import (
 )
 
 func main() {
+	cc := make(chan string)
+	cc <- "Hi there!"
+
 	urls := []string{
 		"http://www.google.com",
 		"http://www.musala.com",
