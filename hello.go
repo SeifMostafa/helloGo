@@ -2,40 +2,28 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"net/http"
-	"os"
 )
 
-type footballCoach struct{}
-type tennisCoach struct{}
-
-func (f footballCoach) giveInstructions() string {
-	return "Run 10KM daily"
-}
-func (t tennisCoach) giveInstructions() string {
-	return "Goto gym daily"
-}
-
-type coach interface {
-	giveInstructions() string
-}
-
-func printInstructions(c coach) {
-	fmt.Println(c.giveInstructions())
-}
 func main() {
-	f := footballCoach{}
-	t := tennisCoach{}
-	printInstructions(f)
-	printInstructions(t)
+	urls := []string{
+		"http://www.google.com",
+	}
+	c := make(chan string)
+	for _, url := range urls {
+		go checkURL(url, c)
+	}
+	fmt.Println(<-c)
+}
+func checkURL(url string, c chan string) {
+	_, err := http.Get(url)
+	if err != nil {
+		fmt.Println("ERROR!", err)
+		c <- "error"
+		return
+	}
+	//io.Copy(os.Stdout, response.Body)
+	fmt.Println("OK.")
+	c <- "ok"
 
-	response, err := http.Get("http://www.google.com")
-	fmt.Printf("%+v , %+v", response, err)
-
-	// bs := make([]byte, 99999)
-	// response.Body.Read(bs)
-	// fmt.Println(string(bs))
-
-	io.Copy(os.Stdout, response.Body)
 }
