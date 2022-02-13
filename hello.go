@@ -16,8 +16,10 @@ func main() {
 		go checkURL(url, c)
 	}
 	for {
-		time.Sleep(time.Second * 5) // to wait 5 seconds before checking website again
-		go checkURL(<-c, c)
+		go func() {
+			time.Sleep(time.Second * 5) // to wait 5 seconds before checking website again
+			checkURL(<-c, c)
+		}()
 	}
 }
 func checkURL(url string, c chan string) {
